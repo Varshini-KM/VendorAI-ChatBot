@@ -207,7 +207,7 @@ def send_and_render(final_input: str, show_user_bubble: bool = True) -> None:
 
     msg_key = len(st.session_state.messages)
     with st.container(key=f"chat_actions_{msg_key}"):
-        col1, col2, _ = st.columns([1, 1, 8])
+        col1, col2, _ = st.columns([0.4, 0.4, 9.2], gap="small")
         with col1:
             if st.button("📋", key=f"copy_{msg_key}", help="Copy response"):
                 st.toast("Response ready to copy from the box below")
