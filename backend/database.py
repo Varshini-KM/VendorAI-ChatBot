@@ -144,7 +144,7 @@ def get_or_create_default_vendor(db) -> Vendor:
     """Convenience helper: single-vendor demo mode uses vendor id=1."""
     vendor = db.query(Vendor).filter(Vendor.id == 1).first()
     if not vendor:
-        vendor = Vendor(id=1, name="My Shop", preferred_language="en")
+        vendor = Vendor(id=1, name="User", preferred_language="en")
         db.add(vendor)
         db.commit()
         db.refresh(vendor)

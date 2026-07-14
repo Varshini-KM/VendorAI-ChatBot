@@ -216,6 +216,21 @@ button[kind="primary"] {
     color: #FDF4E3 !important;
 }
 [data-testid="stSidebar"] .stButton>button:hover { background: rgba(245,148,12,0.25) !important; }
+
+/* Icon-only chat action buttons (copy / regenerate) — ChatGPT/Claude style */
+[class*="st-key-chat_actions_"] button {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 2px 8px !important;
+    font-size: 1rem !important;
+    min-height: 0 !important;
+    color: var(--va-text-muted) !important;
+}
+[class*="st-key-chat_actions_"] button:hover {
+    background: rgba(0,0,0,0.06) !important;
+    border-radius: 6px !important;
+}
 </style>
 """
 

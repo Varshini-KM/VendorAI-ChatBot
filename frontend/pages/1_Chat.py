@@ -155,15 +155,14 @@ if last_assistant:
             if col.button(s, key=f"sugg_{s}", use_container_width=True):
                 st.session_state["pending_message"] = s
 
-if hasattr(st, "audio_input"):
-    with st.expander("🎤 Voice input (beta)"):
-        audio_value = st.audio_input("Record a message (optional)", label_visibility="collapsed")
-        if audio_value is not None:
-            st.caption(
-                "Voice captured. Wire this up to Whisper (or any speech-to-text API) in "
-                "`backend/llm_service.py` — transcribe the audio bytes to text, then call "
-                "`send_chat_message()` with the transcript, exactly like typed messages."
-            )
+with st.expander("🎤 Voice input (beta)"):
+    audio_value = st.audio_input("Record a message (optional)", label_visibility="collapsed")
+    if audio_value is not None:
+        st.caption(
+            "Voice captured. Wire this up to Whisper (or any speech-to-text API) in "
+            "`backend/llm_service.py` — transcribe the audio bytes to text, then call "
+            "`send_chat_message()` with the transcript, exactly like typed messages."
+        )
 
 
 def _stream_words(text: str):
@@ -201,16 +200,22 @@ def send_and_render(final_input: str, show_user_bubble: bool = True) -> None:
     st.write_stream(_stream_words(reply))
     st.markdown("</div></div>", unsafe_allow_html=True)
 
-    if result.get("data"):
-        with st.expander("🔍 Extracted / computed data"):
-            st.json(result["data"])
-    with st.expander("📋 Copy this response"):
-        st.code(reply, language=None)
-
     st.session_state.messages.append(
         {"role": "assistant", "content": reply, "intent": result.get("intent")}
     )
-    st.caption(f"Intent detected: `{result.get('intent')}` · Language: `{result.get('language', 'en')}`")
+
+    msg_key = len(st.session_state.messages)
+    with st.container(key=f"chat_actions_{msg_key}"):
+        col1, col2, _ = st.columns([1, 1, 8])
+        with col1:
+            if st.button("📋", key=f"copy_{msg_key}", help="Copy response"):
+                st.toast("Response ready to copy from the box below")
+                st.code(reply, language=None)
+        with col2:
+            if st.button("🔄", key=f"regen_{msg_key}", help="Regenerate response"):
+                st.session_state.messages.pop()  # drop the last assistant reply
+                send_and_render(final_input, show_user_bubble=False)
+                st.rerun()
 
 
 pending = st.session_state.pop("pending_message", None)
@@ -219,10 +224,3 @@ final_input = pending or user_input
 
 if final_input:
     send_and_render(final_input)
-
-# Regenerate last response
-if len(st.session_state.messages) >= 2 and st.session_state.messages[-1]["role"] == "assistant":
-    last_user = next((m["content"] for m in reversed(st.session_state.messages) if m["role"] == "user"), None)
-    if last_user and st.button("🔄 Regenerate response"):
-        st.session_state.messages.pop()  # drop the last assistant reply
-        send_and_render(last_user, show_user_bubble=False)

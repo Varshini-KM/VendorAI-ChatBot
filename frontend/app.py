@@ -63,11 +63,3 @@ for i, text in enumerate(examples):
 
 st.markdown("&nbsp;", unsafe_allow_html=True)
 st.page_link("pages/1_Chat.py", label="Start chatting →", icon="💬")
-
-if not (config.OPENAI_API_KEY or config.GROK_API_KEY):
-    st.info(
-        "💡 Tip: No LLM API key configured yet? VendorAI still works out of the box "
-        "using a built-in rule-based extractor for English messages — add your "
-        "OpenAI or Grok key in `.env` any time for full multilingual accuracy.",
-        icon="💡",
-    )
