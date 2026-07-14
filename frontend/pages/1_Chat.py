@@ -155,14 +155,15 @@ if last_assistant:
             if col.button(s, key=f"sugg_{s}", use_container_width=True):
                 st.session_state["pending_message"] = s
 
-with st.expander("🎤 Voice input (beta)"):
-    audio_value = st.audio_input("Record a message (optional)", label_visibility="collapsed")
-    if audio_value is not None:
-        st.caption(
-            "Voice captured. Wire this up to Whisper (or any speech-to-text API) in "
-            "`backend/llm_service.py` — transcribe the audio bytes to text, then call "
-            "`send_chat_message()` with the transcript, exactly like typed messages."
-        )
+if hasattr(st, "audio_input"):
+    with st.expander("🎤 Voice input (beta)"):
+        audio_value = st.audio_input("Record a message (optional)", label_visibility="collapsed")
+        if audio_value is not None:
+            st.caption(
+                "Voice captured. Wire this up to Whisper (or any speech-to-text API) in "
+                "`backend/llm_service.py` — transcribe the audio bytes to text, then call "
+                "`send_chat_message()` with the transcript, exactly like typed messages."
+            )
 
 
 def _stream_words(text: str):
