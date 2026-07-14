@@ -12,6 +12,18 @@ restocking advice, all from plain natural-language chat.
 
 ---
 
+## 🌐 Live Demo
+
+- **Try it now:** [myvendorai.streamlit.app](https://myvendorai.streamlit.app)
+- **Backend API docs:** [vendorai-chatbot.onrender.com/docs](https://vendorai-chatbot.onrender.com/docs)
+
+> Note: the backend runs on a free-tier host that sleeps after ~15 minutes of
+> inactivity — the first message after idle time may take 30–50 seconds while
+> it wakes up. Also, since it's a free tier, the database resets on every
+> redeploy, so treat it as a live demo rather than persistent storage.
+
+---
+
 ## ✨ Features
 
 - 💬 Chat interface (text now, voice-input slot ready for Whisper)
