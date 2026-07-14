@@ -200,6 +200,16 @@ button[kind="primary"] {
     background: linear-gradient(180deg, var(--va-teal-deep) 0%%, var(--va-indigo) 100%%);
 }
 [data-testid="stSidebar"] * { color: #FDF4E3 !important; }
+[data-testid="stSidebar"] input,
+[data-testid="stSidebar"] textarea,
+[data-testid="stSidebar"] select,
+[data-testid="stSidebar"] .stTextInput input,
+[data-testid="stSidebar"] .stSelectbox div[data-baseweb="select"] * {
+    color: #1A1A1A !important;
+}
+[data-testid="stSidebar"] .stTextInput input::placeholder {
+    color: #6B6B6B !important;
+}
 [data-testid="stSidebar"] .stButton>button {
     background: rgba(255,249,238,0.08) !important;
     border: 1px solid rgba(255,249,238,0.18) !important;
